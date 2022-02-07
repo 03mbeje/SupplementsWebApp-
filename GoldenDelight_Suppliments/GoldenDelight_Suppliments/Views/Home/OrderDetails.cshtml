@@ -1,0 +1,133 @@
+﻿@{
+    ViewBag.Title = "Order Details";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3 class="title text-center">@ViewBag.Title</h3>
+
+        <div class="row">
+            <div class="col-md-4">
+                <b class="table-active">Account Details</b>
+                @{ GoldenDelight_Suppliments.Models.ClientProfile Account = (GoldenDelight_Suppliments.Models.ClientProfile)ViewBag.Account; }
+
+                <table class="table">
+                    <tr>
+                        <th>Name:</th>
+                        <td>@Account.FirstName   @Account.LastName</td>
+                    </tr>
+                    <tr>
+                        <th>Cell Number:</th>
+                        <td>@Account.Phone</td>
+                    </tr>
+                    <tr>
+                        <th>Email:</th>
+                        <td>@Account.Email</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-md-6">
+
+                <b class="table-active">Order Details</b>
+                @{ GoldenDelight_Suppliments.Models.Order order = (GoldenDelight_Suppliments.Models.Order)ViewBag.Order; }
+
+                <table class="table">
+                    <tr>
+                        <th>Order No.</th>
+                        <td>@order.OrderID</td>
+                    </tr>
+                    <tr>
+                        <th>Status:</th>
+                        <td>@order.ProcessStatus</td>
+                    </tr>
+
+                </table>
+            </div>
+        </div>
+        <br />
+        <br />
+
+        <div class="row">
+            <div class="col-md-4">
+                <b class="table-active">Shipping Details</b>
+                @{ GoldenDelight_Suppliments.Models.ClientAddress address = (GoldenDelight_Suppliments.Models.ClientAddress)ViewBag.Address; }
+                @if (address != null)
+                {
+                    <table class="table">
+                        <tr>
+                            <th>Street:</th>
+                            <td>@address.Street</td>
+                        </tr>
+                        <tr>
+                            <th>Suburb:</th>
+                            <td>@address.Suburb</td>
+                        </tr>
+                        <tr>
+                            <th>City/Town:</th>
+                            <td>@address.City</td>
+                        </tr>
+                        <tr>
+                            <th>Postal Code:</th>
+                            <td>@address.PostalCode</td>
+                        </tr>
+                    </table>
+                }
+
+
+            </div>
+            <div class="col-md-6">
+                <b class="table-active">Items in this Order</b>
+                <table class="table">
+                    <tr>
+                        <th>
+                            Picture
+                        </th>
+                        <th>
+                            Item
+                        </th>
+                        <th>
+                            Qty
+                        </th>
+                        <th>
+                            Price
+                        </th>
+                    </tr>
+
+                    @foreach (var item in (List<GoldenDelight_Suppliments.Models.OrderItem>)ViewBag.Items)
+                    {
+                        <tr>
+                            <td>
+                                @if (item.Suppliment.SupImage != null)
+                                {
+                                    var base64 = Convert.ToBase64String(item.Suppliment.SupImage);
+                                    var imgSrc = string.Format("data:image/gif;base64,{0}", base64);
+                                    <img src="@imgSrc" width="60" height="70" />
+                                }
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Suppliment.SupName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Quantity)
+                            </td>
+                            <td>
+                                @item.Price.ToString("C")
+                            </td>
+                        </tr>
+                    }
+
+                    <tr>
+                        <th>Total:</th>
+                        <td></td>
+                        <td></td>
+                        <td>
+                            @ViewBag.Total
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+</div>

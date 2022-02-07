@@ -1,0 +1,89 @@
+﻿@model IEnumerable<GoldenDelight_Suppliments.Models.Suppliment>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="jumbotron">
+    <div class="container">
+        <h3 class=" title text-center">List of All Supplements</h3>
+        <a class="btn btn-outline-warning fa fa-arrow-left" href="@Url.Action("Create")"> Add New Supplement</a>
+        <br />
+        <br />
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Category.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.SupName)
+                </th>
+                @*<th>
+                    @Html.DisplayNameFor(model => model.SupDesc)
+                </th>*@
+                <th>
+                    @Html.DisplayNameFor(model => model.SupImage)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Quantity)
+                </th>
+                <th>
+                    Stock Alert
+                </th>
+                <th class="text-center">
+                    Actions
+                </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Category.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SupName)
+                    </td>
+                    @*<td>
+                        @Html.DisplayFor(modelItem => item.SupDesc)
+                    </td>*@
+                    <td>
+                        <img src="/Suppliments/RetrieveImage/@item.SupID" alt="" height=100 width=100 />
+                    </td>
+                    <td>
+                        @item.Price.ToString("C")
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                    </td>
+
+                    <td class="text-center">
+                        @if (item.Quantity >= 500)
+                        {
+                            <a class="btn btn-success" href="#">Good</a>
+                        }
+                        else if (item.Quantity < 500 && item.Quantity >= 100)
+                        {
+                            <a class="btn btn-warning" href="#">Not Bad</a>
+                        }
+                        else if (item.Quantity < 100)
+                        {
+                            <a class="btn btn-danger" href="#">Very Bad</a>
+                        }
+                    </td>
+                    <td>
+                        <a class="btn btn-info" href="@Url.Action("Edit", new { id = item.SupID })">Update</a>
+                        <a class="btn btn-primary" href="@Url.Action("Details", new { id = item.SupID })">Details</a>
+                        <a class="btn btn-secondary" href="@Url.Action("Delete", new { id = item.SupID })">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <div class="text-danger text-center" style="font-size:15px;">
+            <div>@ViewBag.NullEmail</div>
+        </div>
+    </div>
+</div>

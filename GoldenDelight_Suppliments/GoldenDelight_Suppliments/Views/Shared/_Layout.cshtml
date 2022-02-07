@@ -1,0 +1,448 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>@ViewBag.Title</title>
+
+    <!-- Meta tag Keywords -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8" />
+    <script>
+        addEventListener("load", function () {
+            setTimeout(hideURLbar, 0);
+        }, false);
+
+        function hideURLbar() {
+            window.scrollTo(0, 1);
+        }
+    </script>
+    <!-- //Meta tag Keywords -->
+
+    <!-- Custom-Files -->
+    <link href="~/Content/GoldenTemp/css/bootstrap.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Bootstrap css -->
+    <link href="~/Content/GoldenTemp/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- Main css -->
+    <link rel="stylesheet" href="~/Content/GoldenTemp/css/fontawesome-all.css">
+    <!-- Font-Awesome-Icons-CSS -->
+    <link href="~/Content/GoldenTemp/css/popuo-box.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- pop-up-box -->
+    <link href="~/Content/GoldenTemp/css/menu.css" rel="stylesheet" type="text/css" media="all" />
+    <!-- menu style -->
+    <!-- //Custom-Files -->
+
+    <!-- web fonts -->
+    <link href="//fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i&amp;subset=latin-ext" rel="stylesheet">
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i,800,800i&amp;subset=cyrillic,cyrillic-ext,greek,greek-ext,latin-ext,vietnamese"
+          rel="stylesheet">
+    <!-- //web fonts -->
+</head>
+<body>
+    <div class="agile-main-top">
+        <div class="container-fluid">
+            <div class="row main-top-w3l py-2">
+                <div class="col-lg-4 header-most-top">
+                    <p class="text-white text-lg-left text-center">
+                        100% Premium Quality Guaranteed
+                        <i class="fas fa-shopping-cart ml-1"></i>
+                    </p>
+                </div>
+                <div class="col-lg-8 header-right mt-lg-0 mt-2">
+                    <!-- header lists -->
+                    <ul>
+                        <li class="text-center border-right text-white">
+                            <a href="@Url.Action("TrackOrder","Home")" class="text-white">
+                                <i class="fas fa-truck mr-2"></i>Track Order
+                            </a>
+                        </li>
+                        <li class="text-center border-right text-white">
+                            <a href="@Url.Action("MyOrders","Home")" class="text-white">
+                                <i class="fas fa-boxes mr-2"></i>Order History
+                            </a>
+                        </li>
+                        <li class="text-center border-right text-white">
+                            <i class="fas fa-phone mr-2"></i><a class="text-white" href="tel:+27312020202">031 312 3252</a>
+                        </li>
+                        @Html.Partial("_LoginPartial")
+                    </ul>
+                    <!-- //header lists -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="header-bot">
+        <div class="container">
+            <div class="row header-bot_inner_wthreeinfo_header_mid">
+                <!-- logo -->
+                <div class="col-md-3 logo_agile">
+                    <h1 class="text-center">
+                        <a href="@Url.Action("Index","Home")" class="font-weight-bold font-italic">
+                            <img src="~/Content/GoldenTemp/logo2.jpg" alt=" " class="img-fluid">
+                            @*GDS e-Store*@
+                        </a>
+                    </h1>
+                </div>
+                <!-- //logo -->
+                <!-- header-bot -->
+                <div class="col-md-9 header mt-4 mb-md-0 mb-4">
+                    <div class="row">
+                        <!-- search -->
+                        @if (User.IsInRole("Administrator"))
+                        {
+                            <div class="col-10 agileits_search">
+                                @using (Html.BeginForm("Index", "Suppliments", FormMethod.Get, new { @class = "form-inline" }))
+                                {
+                                    <input class="form-control mr-sm-2" type="search" name="searchProduct" id="searchProduct" placeholder="Search by Category or Product" aria-label="Search">
+                                    <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="col-10 agileits_search">
+                                @using (Html.BeginForm("Index", "Home", FormMethod.Get, new { @class = "form-inline" }))
+                                {
+                                    <input class="form-control mr-sm-2" type="search" name="searchProduct" id="searchProduct" placeholder="Search Product Name" aria-label="Search">
+                                    <button class="btn my-2 my-sm-0" type="submit">Search</button>
+                                }
+                            </div>
+                        }
+                        <!-- //search -->
+                        <!-- cart details -->
+                        @if (!User.IsInRole("Administrator"))
+                        {
+                            <div class="col-2 top_nav_right text-center mt-sm-0 mt-2">
+                                <div class="wthreecartaits wthreecartaits2 cart cart box_1">
+                                    <a style="margin-top:25px;" class="btn w3view-cart" href="@Url.Action("ViewCart", "Home")">
+                                        <i class="fas fa-cart-arrow-down">
+                                            <sub style="color: #CCA43D; font-size: 18px; top: 1.8vh; right: 5px;">@ViewBag.TotalItems</sub>
+                                        </i>
+                                    </a>
+                                </div>
+                            </div>
+                        }
+                        <!-- //cart details -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- shop locator (popup) -->
+    <!-- //header-bottom -->
+    <!-- navigation -->
+    <div class="navbar-inner">
+        <div class="container">
+            <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <ul class="navbar-nav ml-auto text-center mr-xl-5">
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","Categories")">Manage Categories</a>
+                            </li>
+                            <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link" href="@Url.Action("Index","Suppliments")">Manage Stock</a>
+                            </li>
+                            <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link" href="@Url.Action("Index","Orders")">Supplement Orders</a>
+                            </li>
+                        </ul>
+                    }
+                    else
+                    {
+                        <ul class="navbar-nav ml-auto text-center mr-xl-5">
+                            <li class="nav-item  mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link" href="@Url.Action("Index", "Home")">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Gallery</a>
+                            </li>
+                            <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link" href="#">Blog</a>
+                            </li>
+                            <li class="nav-item mr-lg-2 mb-lg-0 mb-2">
+                                <a class="nav-link" href="#">About</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Contact</a>
+                            </li>
+                        </ul>
+                    }
+
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <div class="body-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <div class="footer-top-first">
+            <div class="container py-md-5 py-sm-4 py-3">
+
+                <div class="row w3l-grids-footer border-top border-bottom py-sm-4 py-3">
+                    <div class="col-md-4 offer-footer">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="fas fa-dolly"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Order Shipping</h3>
+                                <p>Quick And Affordable</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offer-footer my-md-0 my-4">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="fas fa-shipping-fast"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Free Delivery</h3>
+                                <p>December Special</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 offer-footer">
+                        <div class="row">
+                            <div class="col-4 icon-fot">
+                                <i class="far fa-thumbs-up"></i>
+                            </div>
+                            <div class="col-8 text-form-footer">
+                                <h3>Premium Quality</h3>
+                                <p>of Products</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //footer second section -->
+            </div>
+        </div>
+        <!-- footer third section -->
+        <div class="w3l-middlefooter-sec">
+            <div class="container py-md-5 py-sm-4 py-3">
+                <div class="row footer-info w3-agileits-info">
+                    <!-- footer categories -->
+                    <!-- //footer categories -->
+                    <!-- quick links -->
+                    <div class="col-md-3 col-sm-6 footer-grids mt-sm-0 mt-4">
+                        <h3 class="text-white font-weight-bold mb-3">Quick Links</h3>
+                        <ul>
+                            <li class="mb-3">
+                                <a href="@Url.Action("Index", "Home")">Home</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#">Gallery</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#">Blog</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#">About</a>
+                            </li>
+                            <li class="mb-3">
+                                <a href="#">Contacts</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 footer-grids mt-md-0 mt-4">
+                        <h3 class="text-white font-weight-bold mb-3">Get in Touch</h3>
+                        <ul>
+                            <li class="mb-3">
+                                <i class="fas fa-map-marker"></i> 91 Hugo Sparks Berea.
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-mobile"></i> 071 815 3259
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-phone"></i> 031 312 3252
+                            </li>
+                            <li class="mb-3">
+                                <i class="fas fa-envelope-open"></i>
+                                <a href="mailto:example@mail.com">goldenDs@supplements.ac.za</a>
+                            </li>
+                            <li>
+                                <i class="fas fa-envelope-open"></i>
+                                <a href="mailto:example@mail.com">goldenD@gmail.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 col-sm-6 footer-grids w3l-agileits mt-md-0 mt-4">
+                        <!-- newsletter -->
+                        <h3 class="text-white font-weight-bold mb-3">Newsletter</h3>
+                        <p class="mb-3">Golden Delight Supplements</p>
+                        <form action="#" method="post">
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email" name="email" required="">
+                                <input type="submit" value="Go" disabled="disabled">
+                            </div>
+                        </form>
+                        <!-- //newsletter -->
+                        <!-- social icons -->
+                        <div class="footer-grids  w3l-socialmk mt-3">
+                            <h3 class="text-white font-weight-bold mb-3">Follow Us on</h3>
+                            <div class="social">
+                                <ul>
+                                    <li>
+                                        <a class="icon fb" href="#">
+                                            <i class="fab fa-facebook-f"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="icon tw" href="#">
+                                            <i class="fab fa-twitter"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a class="icon gp" href="#">
+                                            <i class="fab fa-google-plus-g"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <!-- //social icons -->
+                    </div>
+                </div>
+                <!-- //quick links -->
+            </div>
+        </div>
+        <!-- //footer third section -->
+        <!-- footer fourth section -->
+        <!-- //footer fourth section (text) -->
+    </footer>
+    <div class="copy-right py-3">
+        <div class="container">
+            <p class="text-center text-white">
+                © 2021 Golden Delight Supplemts Inc. All rights reserved.
+            </p>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+    <script src="~/Content/GoldenTemp/js/jquery-2.2.3.min.js"></script>
+    <!-- //jquery -->
+    <!-- nav smooth scroll -->
+    <script>
+        $(document).ready(function () {
+            $(".dropdown").hover(
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                    $(this).toggleClass('open');
+                },
+                function () {
+                    $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                    $(this).toggleClass('open');
+                }
+            );
+        });
+    </script>
+    <!-- //nav smooth scroll -->
+    <!-- popup modal (for location)-->
+    <script src="~/Content/GoldenTemp/js/jquery.magnific-popup.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.popup-with-zoom-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false,
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-zoom-in'
+            });
+
+        });
+    </script>
+    <!-- //popup modal (for location)-->
+    <!-- cart-js -->
+    <script src="~/Content/GoldenTemp/js/minicart.js"></script>
+    <script>
+        paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
+
+        paypals.minicarts.cart.on('checkout', function (evt) {
+            var items = this.items(),
+                len = items.length,
+                total = 0,
+                i;
+
+            // Count the number of each item in the cart
+            for (i = 0; i < len; i++) {
+                total += items[i].get('quantity');
+            }
+
+            if (total < 3) {
+                alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+                evt.preventDefault();
+            }
+        });
+    </script>
+    <!-- //cart-js -->
+    <!-- password-script -->
+    <script>
+        window.onload = function () {
+            document.getElementById("password1").onchange = validatePassword;
+            document.getElementById("password2").onchange = validatePassword;
+        }
+
+        function validatePassword() {
+            var pass2 = document.getElementById("password2").value;
+            var pass1 = document.getElementById("password1").value;
+            if (pass1 != pass2)
+                document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+            else
+                document.getElementById("password2").setCustomValidity('');
+            //empty string means no validation error
+        }
+    </script>
+    <!-- //password-script -->
+    <!-- scroll seller -->
+    <script src="~/Content/GoldenTemp/js/scroll.js"></script>
+    <!-- //scroll seller -->
+    <!-- smoothscroll -->
+    <script src="~/Content/GoldenTemp/js/SmoothScroll.min.js"></script>
+    <!-- //smoothscroll -->
+    <!-- start-smooth-scrolling -->
+    <script src="~/Content/GoldenTemp/js/move-top.js"></script>
+    <script src="~/Content/GoldenTemp/js/easing.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            $(".scroll").click(function (event) {
+                event.preventDefault();
+
+                $('html,body').animate({
+                    scrollTop: $(this.hash).offset().top
+                }, 1000);
+            });
+        });
+    </script>
+    <!-- //end-smooth-scrolling -->
+    <!-- smooth-scrolling-of-move-up -->
+    <script>
+        $(document).ready(function () {
+            /*
+            var defaults = {
+                containerID: 'toTop', // fading element id
+                containerHoverID: 'toTopHover', // fading element hover id
+                scrollSpeed: 1200,
+                easingType: 'linear'
+            };
+            */
+            $().UItoTop({
+                easingType: 'easeOutQuart'
+            });
+
+        });
+    </script>
+    <!-- //smooth-scrolling-of-move-up -->
+    <!-- for bootstrap working -->
+    <script src="~/Content/GoldenTemp/js/bootstrap.js"></script>
+</body>
+</html>
+

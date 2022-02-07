@@ -1,0 +1,193 @@
+﻿@model IEnumerable<GoldenDelight_Suppliments.Models.Suppliment>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<!-- top Products -->
+<div class="ads-grid py-sm-5 py-4">
+    <div class="container py-xl-4 py-lg-2">
+        <!-- tittle heading -->
+        <h3 class="tittle-w3l text-center mb-lg-5 mb-sm-4 mb-3">
+            <span>G</span>olden
+            <span>D</span>elight
+            <span>S</span>upplements
+        </h3>
+        <!-- //tittle heading -->
+        <div class="row">
+            <!-- product left -->
+            <div class="agileinfo-ads-display col-lg-12">
+                <!--Change from 10 to 12-->
+                <div class="wrapper">
+                    <!-- first section -->
+                    <div class="product-sec1 px-sm-4 px-3 py-sm-5  py-3 mb-4">
+                        <div class="row">
+                            @foreach (var item in Model)
+                            {
+                                <div class="col-md-4 product-men mt-5">
+                                    <div class="men-pro-item simpleCart_shelfItem">
+                                        <div class="men-thumb-item text-center">
+                                            <img src="/Suppliments/RetrieveImage/@item.SupID" alt="" height=150 width=150 />
+                                            <div class="men-cart-pro">
+                                                <div class="inner-men-cart-pro">
+                                                    <a href="#" class="link-product-add-cart">Quick View</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item-info-product text-center border-top mt-4">
+                                            <h4 class="pt-1">
+                                                <a href="#">@Html.DisplayFor(modelItem => item.SupName)</a>
+                                            </h4>
+                                            <div class="info-product-price my-2">
+                                                <span class="item_price">@item.Price.ToString("R 0.00")</span>
+                                            </div>
+                                            <div class="snipcart-details top_brand_home_details item_add single-item hvr-outline-out">
+                                                @if (item.Quantity == 0)
+                                                {
+                                                    <a href="@Url.Action(actionName: "AddToCart", controllerName: "Home", routeValues: new { id = item.SupID })" class="button btn disabled"><i class="fa fa-shopping-cart"></i> Out of stock</a>
+                                                }
+                                                else if (User.IsInRole("Administrator"))
+                                                {
+                                                    <a href="@Url.Action(actionName: "AddToCart", controllerName: "Home", routeValues: new { id = item.SupID })" class="button btn disabled"><i class="fa fa-shopping-cart"></i> Item to Order</a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@Url.Action(actionName: "AddToCart", controllerName: "Home", routeValues: new { id = item.SupID })" class="button btn"><i class="fa fa-shopping-cart"></i> Add To Cart</a>
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            }
+                            <div class="text-danger text-center" style="font-size:15px; padding-left:30%;">
+                                <div>@ViewBag.NullEmail</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/jquery-2.2.3.min.js"></script>
+<!-- //jquery -->
+<!-- nav smooth scroll -->
+<script>
+    $(document).ready(function () {
+        $(".dropdown").hover(
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideDown("fast");
+                $(this).toggleClass('open');
+            },
+            function () {
+                $('.dropdown-menu', this).stop(true, true).slideUp("fast");
+                $(this).toggleClass('open');
+            }
+        );
+    });
+</script>
+<!-- //nav smooth scroll -->
+<!-- popup modal (for location)-->
+<script src="js/jquery.magnific-popup.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.popup-with-zoom-anim').magnificPopup({
+            type: 'inline',
+            fixedContentPos: false,
+            fixedBgPos: true,
+            overflowY: 'auto',
+            closeBtnInside: true,
+            preloader: false,
+            midClick: true,
+            removalDelay: 300,
+            mainClass: 'my-mfp-zoom-in'
+        });
+
+    });
+</script>
+<!-- //popup modal (for location)-->
+<!-- cart-js -->
+<script src="js/minicart.js"></script>
+<script>
+    paypals.minicarts.render(); //use only unique class names other than paypals.minicarts.Also Replace same class name in css and minicart.min.js
+
+    paypals.minicarts.cart.on('checkout', function (evt) {
+        var items = this.items(),
+            len = items.length,
+            total = 0,
+            i;
+
+        // Count the number of each item in the cart
+        for (i = 0; i < len; i++) {
+            total += items[i].get('quantity');
+        }
+
+        if (total < 3) {
+            alert('The minimum order quantity is 3. Please add more to your shopping cart before checking out');
+            evt.preventDefault();
+        }
+    });
+</script>
+<!-- //cart-js -->
+<!-- password-script -->
+<script>
+    window.onload = function () {
+        document.getElementById("password1").onchange = validatePassword;
+        document.getElementById("password2").onchange = validatePassword;
+    }
+
+    function validatePassword() {
+        var pass2 = document.getElementById("password2").value;
+        var pass1 = document.getElementById("password1").value;
+        if (pass1 != pass2)
+            document.getElementById("password2").setCustomValidity("Passwords Don't Match");
+        else
+            document.getElementById("password2").setCustomValidity('');
+        //empty string means no validation error
+    }
+</script>
+<!-- //password-script -->
+<!-- scroll seller -->
+<script src="js/scroll.js"></script>
+<!-- //scroll seller -->
+<!-- smoothscroll -->
+<script src="js/SmoothScroll.min.js"></script>
+<!-- //smoothscroll -->
+<!-- start-smooth-scrolling -->
+<script src="js/move-top.js"></script>
+<script src="js/easing.js"></script>
+<script>
+    jQuery(document).ready(function ($) {
+        $(".scroll").click(function (event) {
+            event.preventDefault();
+
+            $('html,body').animate({
+                scrollTop: $(this.hash).offset().top
+            }, 1000);
+        });
+    });
+</script>
+<!-- //end-smooth-scrolling -->
+<!-- smooth-scrolling-of-move-up -->
+<script>
+    $(document).ready(function () {
+        /*
+        var defaults = {
+            containerID: 'toTop', // fading element id
+            containerHoverID: 'toTopHover', // fading element hover id
+            scrollSpeed: 1200,
+            easingType: 'linear'
+        };
+        */
+        $().UItoTop({
+            easingType: 'easeOutQuart'
+        });
+
+    });
+</script>
+<!-- //smooth-scrolling-of-move-up -->
+<!-- for bootstrap working -->
+<script src="js/bootstrap.js"></script>
+

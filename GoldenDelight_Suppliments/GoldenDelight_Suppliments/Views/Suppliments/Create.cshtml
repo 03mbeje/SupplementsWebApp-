@@ -1,0 +1,77 @@
+﻿@model GoldenDelight_Suppliments.Models.Suppliment
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3 class="title text-center">Add New Supplement</h3>
+        @using (Html.BeginForm("Create", "Suppliments", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    <label class="control-label col-md-2"><b>Category</b></label>
+                    <div class="col-md-10">
+                        @Html.DropDownList("CategoryID", null, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.CategoryID, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><b>Name</b></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SupName, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SupName, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><b>Description</b></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.SupDesc, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.SupDesc, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><b>Image</b></label>
+                    <div class="col-md-10">
+                        <input type="file" name="ImageData" id="ImageData" onchange="readURL(this);" class="form-control" required="required" />
+                        @Html.ValidationMessageFor(model => model.SupImage, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><b>Price</b></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-md-2"><b>Quantity</b></label>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Quantity, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.Quantity, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Create" class="btn btn-warning" />
+                        <a class="btn btn-primary" href="@Url.Action("Index","Suppliments")">View Categories</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

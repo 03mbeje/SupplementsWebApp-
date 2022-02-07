@@ -1,0 +1,67 @@
+﻿@model GoldenDelight_Suppliments.Models.Suppliment
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3 class="title text-center">Remove Supplement</h3>
+
+        <h3 class="text-danger">Are you sure you want to remove this supplement?</h3>
+        <div>
+            <hr />
+            <div class="form-group">
+                <label class="control-label col-md-2"><b>Category</b></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" value="@Html.DisplayFor(x=>x.Category.CategoryName)" readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"><b>Name</b></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" value="@Html.DisplayFor(x=>x.SupName)" readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"><b>Description</b></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" value="@Html.DisplayFor(x=>x.SupDesc)" readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"><b>Supplement Image</b></label>
+                <div class="col-md-10">
+                    <img src="/Suppliments/RetrieveImage/@Model.SupID" alt="" height=100 width=100 />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"><b>Price</b></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" value="@Model.Price.ToString("C")" readonly="readonly" />
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-2"><b>Quantity</b></label>
+                <div class="col-md-10">
+                    <input type="text" class="form-control" value="@Html.DisplayFor(x=>x.Quantity)" readonly="readonly" />
+                </div>
+            </div>
+
+            <br />
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="form-actions no-color">
+                    <input type="submit" value="Remove" class="btn btn-danger" />
+                </div>
+            }
+        </div>
+    </div>
+</div>
+

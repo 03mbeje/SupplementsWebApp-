@@ -1,0 +1,44 @@
+﻿@model IEnumerable<GoldenDelight_Suppliments.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="jumbotron">
+    <div class="container">
+        <h3 class="title"><b>Suppliment Category List</b></h3>
+        <a class="btn btn-outline-warning fa fa-arrow-left" href="@Url.Action("Create")"> Add New Category</a>
+        <br />
+        <br />
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CategoryName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Description)
+                </th>
+                <th class="text-center" colspan="3">Actions</th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CategoryName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td colspan="3" class="text-center">
+                        @*<a class="btn btn-warning" href="@Url.Action("Create")">New</a>*@
+                        <a class="btn btn-warning" href="@Url.Action("Edit", new { id = item.CategoryID })">Update</a>
+                        <a class="btn btn-primary" href="@Url.Action("Delete", new { id = item.CategoryID })">Delete</a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+    </div>
+</div>

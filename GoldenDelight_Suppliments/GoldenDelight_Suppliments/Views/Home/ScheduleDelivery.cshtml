@@ -1,0 +1,69 @@
+﻿@model GoldenDelight_Suppliments.Models.Shipment
+
+<div class="modal-header">
+    <h4 class="modal-title">Schedule Shipment</h4>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true"><i class="fa fa-times-circle"></i></span>
+    </button>
+</div>
+
+
+@using (Html.BeginForm("ScheduleDelivery", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <div class="modal-body">
+
+            <div class="form-group" hidden="hidden">
+                @Html.LabelFor(model => model.OrderID, "OrderID", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OrderID, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.OrderID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" hidden="hidden">
+                @Html.LabelFor(model => model.Email, "Email", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2"><b>Delivery&nbsp;Date</b></label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DeliveryDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DeliveryDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2"><b>Estimate&nbsp;Duration</b></label>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EstimateDuration, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.EstimateDuration, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group" hidden="hidden">
+                @Html.LabelFor(model => model.ArrivalDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.ArrivalDate, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.ArrivalDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <span id="progress" class="text-center" style="display: none;">
+                    <img src="/images/wait.gif" alt="wiat" />
+                    Processing...
+                </span>
+                <input type="submit" value="Process" class="button btn" />
+                <button class="btn btn-warning" data-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+}
+
